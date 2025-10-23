@@ -1,3 +1,4 @@
+//Pewarisan
 // Kelas induk (superclass)
 class Hewan {
   constructor(nama, jenis) {
@@ -23,7 +24,7 @@ console.log(milo.nama);  // Milo
 console.log(milo.jenis); // Kucing (Didapat dari superclass)
 
 // ---------------------------------
-
+//Polimorfisme
 class Anjing extends Hewan {
   constructor(nama, warna) {
     super(nama, "Anjing");
