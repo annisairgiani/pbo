@@ -9,19 +9,15 @@
 
     <h1>Masukkan Nama Anda</h1>
 
-    <!-- Paragraf -->
     <p>Silakan masukkan nama Anda pada kolom input di bawah ini, lalu klik tombol Submit.</p>
 
-    <!-- Input -->
     <input type="text" id="nameInput" placeholder="Nama Anda">
     <button onclick="tampilkanNama()">Submit</button>
 
-    <!-- Output -->
     <h2 id="output"></h2>
 
     <br>
 
-    <!-- Table -->
     <table border="1" cellpadding="5">
         <tr>
             <th>No</th>
@@ -35,13 +31,17 @@
 
     <br>
 
-    <!-- Object -->
-    <object data="data:text/plain,Ini adalah contoh object pada HTML GUI"
-            width="300"
-            height="80">
+    <h3>Contoh Object</h3>
+    <object data="https://www.example.com" width="300" height="200">
+        Browser Anda tidak mendukung object.
     </object>
 
-    <!-- Script -->
+    <br><br>
+
+    <h3>Foto</h3>
+    <img src="https://i.pinimg.com/1200x/20/4d/79/204d792f2fe0928b9dd0d27fee708fed.jpg"
+        width="200" alt="Contoh Foto">
+
     <script>
         function tampilkanNama() {
             let nama = document.getElementById("nameInput").value;
