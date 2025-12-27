@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Login App</title>
     <style>
-        /* Menggunakan font yang lebih modern */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
         * {
@@ -16,72 +15,60 @@
         body {
             margin: 0;
             min-height: 100vh;
-            /* Background Gradient yang lebih hidup */
-            background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+            background: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-        }
-
-        /* Dekorasi Lingkaran Background */
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            z-index: -1;
-            animation: float 10s infinite alternate;
-        }
-        .circle-1 { width: 300px; height: 300px; top: -100px; right: -50px; }
-        .circle-2 { width: 200px; height: 200px; bottom: -50px; left: -50px; }
-
-        @keyframes float {
-            from { transform: translateY(0); }
-            to { transform: translateY(20px); }
         }
 
         .wrapper {
             width: 850px;
             height: 480px;
-            background: rgba(255, 255, 255, 0.95);
+            background: #fff;
             display: flex;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.8s ease-out;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            animation: fadeIn 0.6s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* PANEL KIRI */
         .left {
             width: 40%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            color: white;
             text-align: center;
+        }
+
+        /* TEMA WARNA LOGIN (Biru-Ungu) */
+        #loginPage .left {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+
+        /* TEMA WARNA BERHASIL (Pink-Orange) */
+        #userPage .left {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
         }
 
         .left h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .left p {
             margin-top: 20px;
             font-size: 14px;
-            line-height: 1.8;
+            line-height: 1.7;
             opacity: 0.9;
-            font-weight: 300;
         }
 
         /* PANEL KANAN */
@@ -98,128 +85,92 @@
             margin-bottom: 30px;
             color: #333;
             font-weight: 600;
-            position: relative;
-        }
-
-        /* Garis bawah di judul Login */
-        .right h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            width: 50px;
-            height: 4px;
-            background: #764ba2;
-            border-radius: 2px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
         }
 
         input {
             width: 100%;
-            padding: 14px 15px;
+            padding: 14px;
             border-radius: 10px;
-            border: 2px solid #f0f0f0;
+            border: 2px solid #eee;
+            margin-bottom: 20px;
             font-size: 14px;
-            transition: all 0.3s;
-            background: #f9f9f9;
+            transition: 0.3s;
         }
 
         input:focus {
-            border-color: #667eea;
-            background: #fff;
+            border-color: #6a11cb;
             outline: none;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+            background: #fcfcfc;
         }
 
         button {
             padding: 14px;
             border: none;
             border-radius: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.4s;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+            transition: 0.3s;
+        }
+
+        /* Tombol di halaman Login */
+        #loginPage button {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+
+        /* Tombol di halaman User (Logout) */
+        #userPage button {
+            background: linear-gradient(135deg, #36d1dc, #5b86e5);
         }
 
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+            transform: translateY(-2px);
             filter: brightness(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .user-page-content {
+        .info-box {
+            background: #fff5f8;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed #dd2476;
+            margin-bottom: 25px;
             text-align: center;
         }
 
-        .info-card {
-            background: #f4f7fe;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border-left: 5px solid #667eea;
-        }
-
-        .logout {
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
-        }
-
-        /* Responsive untuk HP */
         @media (max-width: 768px) {
-            .wrapper {
-                flex-direction: column;
-                width: 90%;
-                height: auto;
-            }
-            .left, .right {
-                width: 100%;
-            }
-            .left { padding: 30px; }
+            .wrapper { flex-direction: column; width: 90%; height: auto; }
+            .left, .right { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<div class="circle circle-1"></div>
-<div class="circle circle-2"></div>
-
 <div class="wrapper" id="loginPage">
     <div class="left">
-        <h1>Halo! 👋</h1>
-        <p>
-            Selamat datang kembali. Silakan masuk untuk mengelola akun Anda dan melihat fitur eksklusif kami.
-        </p>
+        <h1>Welcome! 👋</h1>
+        <p>Silakan masuk untuk mengakses fitur lengkap aplikasi kami.</p>
     </div>
 
     <div class="right">
-        <h2>Login</h2>
-        <div class="input-group">
-            <input type="text" id="username" placeholder="Username">
-        </div>
-        <div class="input-group">
-            <input type="password" id="password" placeholder="Password">
-        </div>
-        <button onclick="app.login()">Masuk Sekarang</button>
+        <h2>Sign In</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="app.login()">Login Sekarang</button>
     </div>
 </div>
 
 <div class="wrapper" id="userPage" style="display:none;">
     <div class="left">
-        <h1>Berhasil! 🎉</h1>
-        <p>Anda sekarang berada di dalam dashboard pribadi Anda. Senang melihat Anda kembali!</p>
+        <h1>Yey! Berhasil 🎉</h1>
+        <p>Selamat! Akun Anda telah terverifikasi. Nikmati pengalaman menjelajah di aplikasi kami.</p>
     </div>
 
-    <div class="right user-page-content">
-        <h2>Profil Pengguna</h2>
-        <div class="info-card" id="userInfo"></div>
-        <button class="logout" onclick="app.logout()">Keluar Akun</button>
+    <div class="right">
+        <h2 style="text-align: center;">Profil Anda</h2>
+        <div class="info-box" id="userInfo"></div>
+        <button onclick="app.logout()">Keluar Aplikasi</button>
     </div>
 </div>
 
@@ -232,8 +183,8 @@ class LoginApp {
     initUserData() {
         if (!localStorage.getItem("users")) {
             const users = [
-                { username: "rony", password: "123", nama: "Rony" },
-                { username: "salma", password: "456", nama: "Salma" },
+                { username: "rony", password: "123", nama: "Rony Parulian" },
+                { username: "salma", password: "456", nama: "Salma Salsabil" },
                 { username: "parulian", password: "789", nama: "Parulian" }
             ];
             localStorage.setItem("users", JSON.stringify(users));
@@ -241,25 +192,14 @@ class LoginApp {
     }
 
     login() {
-        const usernameInput = document.getElementById("username");
-        const passwordInput = document.getElementById("password");
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
 
         const users = JSON.parse(localStorage.getItem("users"));
-        const user = users.find(
-            u => u.username === username && u.password === password
-        );
+        const user = users.find(u => u.username === username && u.password === password);
 
         if (!user) {
-            // Pesan Alert sesuai permintaan
             alert("UPS! nama atau password yang anda masukan salah. Silahkan coba lagi");
-            
-            // Efek getar sederhana jika salah
-            document.getElementById("loginPage").style.animation = 'none';
-            setTimeout(() => {
-                document.getElementById("loginPage").style.animation = 'shake 0.5s';
-            }, 10);
         } else {
             this.showUserPage(user);
         }
@@ -269,9 +209,8 @@ class LoginApp {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("userPage").style.display = "flex";
         document.getElementById("userInfo").innerHTML = `
-            <p style="margin: 5px 0;"><strong>Nama Lengkap:</strong><br>${user.nama}</p>
-            <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
-            <p style="margin: 5px 0;"><strong>ID Username:</strong><br>@${user.username}</p>
+            <p style="margin:0; color:#dd2476; font-weight:600; font-size:18px;">${user.nama}</p>
+            <small style="color:#777;">ID: ${user.username}</small>
         `;
     }
 
@@ -282,17 +221,6 @@ class LoginApp {
         document.getElementById("password").value = "";
     }
 }
-
-// Tambahan animasi shake di CSS via JS injection untuk handling error
-const style = document.createElement('style');
-style.innerHTML = `
-    @keyframes shake {
-        0%, 100% {transform: translateX(0);}
-        25% {transform: translateX(-10px);}
-        75% {transform: translateX(10px);}
-    }
-`;
-document.head.appendChild(style);
 
 const app = new LoginApp();
 </script>
