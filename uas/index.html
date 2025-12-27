@@ -53,7 +53,7 @@
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
         }
 
-        /* User Page: Hijau Toska / Teal (Lebih adem) */
+        /* User Page: Hijau Toska / Teal */
         #userPage .left {
             background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
         }
@@ -105,10 +105,11 @@
             box-shadow: 0 4px 12px rgba(42, 82, 152, 0.2);
         }
 
-        /* Tombol Logout Biasa (Abu-abu Tua) */
+        /* Tombol Logout Merah Solid (Bukan Gradasi) */
         .btn-logout {
-            background: #555; /* Warna netral yang biasa digunakan */
+            background: #e74c3c; /* Merah Flat Modern */
             margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
         }
 
         button:hover {
@@ -167,7 +168,8 @@ class LoginApp {
         if (!localStorage.getItem("users")) {
             const users = [
                 { username: "rony", password: "123", nama: "Rony Parulian" },
-                { username: "salma", password: "456", nama: "Salma Salsabil" }
+                { username: "salma", password: "456", nama: "Salma Salsabil" },
+                { username: "parulian", password: "789", nama: "Parulian" }
             ];
             localStorage.setItem("users", JSON.stringify(users));
         }
@@ -191,7 +193,7 @@ class LoginApp {
         document.getElementById("userPage").style.display = "flex";
         document.getElementById("userInfo").innerHTML = `
             <h3 style="margin:0; color:#333;">${user.nama}</h3>
-            <p style="margin:5px 0; color:#777;">ID: ${user.username}</p>
+            <p style="margin:5px 0; color:#777;">ID: @${user.username}</p>
         `;
     }
 
