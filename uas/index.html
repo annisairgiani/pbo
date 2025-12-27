@@ -2,141 +2,157 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Login App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login App Color Swapped</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
             margin: 0;
             min-height: 100vh;
-            background: #eaeaea;
+            background: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .wrapper {
-            width: 800px;
-            height: 420px;
+            width: 850px;
+            height: 480px;
             background: #fff;
             display: flex;
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* PANEL KIRI */
         .left {
-            width: 45%;
-            background: linear-gradient(135deg, #ff512f, #dd2476);
-            color: white;
-            padding: 40px 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .left h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        .left p {
-            margin-top: 15px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        /* PANEL KANAN */
-        .right {
-            width: 55%;
+            width: 40%;
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            color: white;
+            text-align: center;
         }
 
-        .right h2 {
-            margin-bottom: 20px;
-            color: #333;
+        /* WARNA BIRU UNTUK LOGIN */
+        #loginPage .left {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
         }
+
+        /* WARNA MERAH UNTUK LOGOUT / USER PAGE */
+        #userPage .left {
+            background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%);
+        }
+
+        .left h1 { margin: 0; font-size: 28px; }
+        .left p { margin-top: 15px; font-size: 14px; opacity: 0.8; line-height: 1.6; }
+
+        /* PANEL KANAN */
+        .right {
+            width: 60%;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: white;
+        }
+
+        .right h2 { margin-bottom: 25px; color: #333; }
 
         input {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-            font-size: 14px;
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid #f0f0f0;
+            margin-bottom: 20px;
             transition: 0.3s;
         }
 
         input:focus {
-            border-color: #dd2476;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(221,36,118,0.2);
+            border-color: #2a5298; /* Biru saat fokus di login */
         }
 
         button {
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #ff512f, #dd2476);
+            border-radius: 10px;
             color: white;
-            font-size: 15px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
         }
 
+        /* Tombol Biru (Login) */
+        #loginPage button {
+            background: #2a5298;
+            box-shadow: 0 5px 15px rgba(42, 82, 152, 0.3);
+        }
+
+        /* Tombol Merah (Logout) */
+        #userPage button {
+            background: #ef473a;
+            box-shadow: 0 5px 15px rgba(239, 71, 58, 0.3);
+        }
+
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(221,36,118,0.4);
+            filter: brightness(1.1);
         }
 
-        .user-page {
-            text-align: center;
+        .user-card {
+            background: #fff5f5;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #ef473a;
         }
 
-        .logout {
-            margin-top: 20px;
-            background: linear-gradient(135deg, #36d1dc, #5b86e5);
+        @media (max-width: 768px) {
+            .wrapper { flex-direction: column; width: 95%; height: auto; }
+            .left, .right { width: 100%; }
         }
-
     </style>
 </head>
 <body>
 
 <div class="wrapper" id="loginPage">
     <div class="left">
-        <h1>Welcome Back 👋</h1>
-        <p>
-            Silakan login untuk mengakses halaman user.
-            Aplikasi login sederhana menggunakan JavaScript OOP
-            dan localStorage.
-        </p>
+        <h1>Welcome Back!</h1>
+        <p>Gunakan akun Anda untuk masuk ke sistem.</p>
     </div>
-
     <div class="right">
         <h2>Login</h2>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
-        <button onclick="app.login()">Login</button>
+        <button onclick="app.login()">Masuk ke Akun</button>
     </div>
 </div>
 
 <div class="wrapper" id="userPage" style="display:none;">
     <div class="left">
-        <h1>Login Berhasil 🎉</h1>
-        <p>Selamat datang di halaman user</p>
+        <h1>Akses Berhasil!</h1>
+        <p>Anda telah masuk dengan aman ke dalam dashboard.</p>
     </div>
-
-    <div class="right user-page">
-        <h2>Info User</h2>
-        <div id="userInfo"></div>
-        <button class="logout" onclick="app.logout()">Logout</button>
+    <div class="right" style="text-align: center;">
+        <h2>Data Pengguna</h2>
+        <div class="user-card" id="userInfo"></div>
+        <button onclick="app.logout()">Logout Sekarang</button>
     </div>
 </div>
 
@@ -149,8 +165,8 @@ class LoginApp {
     initUserData() {
         if (!localStorage.getItem("users")) {
             const users = [
-                { username: "rony", password: "123", nama: "Rony" },
-                { username: "salma", password: "456", nama: "Salma" },
+                { username: "rony", password: "123", nama: "Rony Parulian" },
+                { username: "salma", password: "456", nama: "Salma Salsabil" },
                 { username: "parulian", password: "789", nama: "Parulian" }
             ];
             localStorage.setItem("users", JSON.stringify(users));
@@ -160,14 +176,12 @@ class LoginApp {
     login() {
         const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value.trim();
-
         const users = JSON.parse(localStorage.getItem("users"));
-        const user = users.find(
-            u => u.username === username && u.password === password
-        );
+        
+        const user = users.find(u => u.username === username && u.password === password);
 
         if (!user) {
-            alert("UPSS! Nama atau password yang anda masukan salah. Silahkan coba lagi!");
+            alert("UPS! nama atau password yang anda masukan salah. Silahkan coba lagi");
         } else {
             this.showUserPage(user);
         }
@@ -177,8 +191,8 @@ class LoginApp {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("userPage").style.display = "flex";
         document.getElementById("userInfo").innerHTML = `
-            <p><strong>Nama:</strong> ${user.nama}</p>
-            <p><strong>Username:</strong> ${user.username}</p>
+            <h3 style="margin:0; color:#cb2d3e;">${user.nama}</h3>
+            <p style="margin:5px 0; color:#666;">Username: ${user.username}</p>
         `;
     }
 
