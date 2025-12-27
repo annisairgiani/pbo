@@ -15,26 +15,39 @@
         body {
             margin: 0;
             min-height: 100vh;
-            background: #f0f2f5;
+            background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
+
+        /* Dekorasi Lingkaran Background agar mirip gambar */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: -1;
+        }
+        body::before { width: 400px; height: 400px; top: -100px; right: -100px; }
+        body::after { width: 300px; height: 300px; bottom: -50px; left: -50px; }
 
         .wrapper {
             width: 850px;
             height: 480px;
             background: #fff;
             display: flex;
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            animation: fadeIn 0.5s ease-in-out;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            animation: fadeIn 0.6s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         /* PANEL KIRI */
@@ -48,17 +61,17 @@
             text-align: center;
         }
 
-        /* Login Page: Biru Gradasi */
         #loginPage .left {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
         }
 
-        /* User Page: Hijau Toska / Teal */
         #userPage .left {
-            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            margin: 20px;
+            border-radius: 20px;
         }
 
-        .left h1 { margin: 0; font-size: 28px; }
+        .left h1 { margin: 0; font-size: 30px; font-weight: 600; }
         .left p { margin-top: 15px; font-size: 14px; opacity: 0.9; line-height: 1.6; }
 
         /* PANEL KANAN */
@@ -71,27 +84,47 @@
             background: white;
         }
 
-        .right h2 { margin-bottom: 25px; font-weight: 600; }
+        .right h2 { 
+            margin-bottom: 30px; 
+            font-weight: 600; 
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Garis bawah pada judul sesuai gambar */
+        .right h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 60px;
+            height: 4px;
+            background: #6a11cb;
+            border-radius: 2px;
+        }
 
         input {
             width: 100%;
             padding: 14px;
-            border-radius: 10px;
-            border: 2px solid #eee;
+            border-radius: 12px;
+            border: 2px solid #f0f0f0;
             margin-bottom: 20px;
             font-size: 14px;
             transition: 0.3s;
+            background: #f9f9f9;
         }
 
         input:focus {
             outline: none;
-            border-color: #2a5298;
+            border-color: #2575fc;
+            background: #fff;
         }
 
         button {
             padding: 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: white;
             font-size: 16px;
             font-weight: 600;
@@ -99,35 +132,44 @@
             transition: 0.3s;
         }
 
-        /* Tombol Biru Login */
         .btn-login {
             background: #2a5298;
-            box-shadow: 0 4px 12px rgba(42, 82, 152, 0.2);
+            box-shadow: 0 5px 15px rgba(42, 82, 152, 0.3);
         }
 
-        /* Tombol Logout Merah Solid (Bukan Gradasi) */
+        /* Tombol Logout Merah Marun/Solid sesuai referensi */
         .btn-logout {
-            background: #e74c3c; /* Merah Flat Modern */
+            background: #a52a2a; /* Warna merah gelap solid */
             margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+            box-shadow: 0 5px 15px rgba(165, 42, 42, 0.3);
         }
 
         button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+            opacity: 0.95;
+            transform: translateY(-3px);
         }
 
+        /* Kartu Info Profil dengan border biru sesuai gambar */
         .user-card {
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            margin-bottom: 20px;
+            background: #f0f7ff;
+            border: 3px solid #3498db; /* Border tebal biru */
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .user-card p {
+            margin: 5px 0;
+            color: #444;
+            font-size: 14px;
         }
 
         @media (max-width: 768px) {
             .wrapper { flex-direction: column; width: 95%; height: auto; }
             .left, .right { width: 100%; }
+            #userPage .left { margin: 10px; }
         }
     </style>
 </head>
@@ -135,11 +177,11 @@
 
 <div class="wrapper" id="loginPage">
     <div class="left">
-        <h1>Welcome!</h1>
+        <h1>Welcome! 👋</h1>
         <p>Silakan masuk untuk mengakses dashboard Anda.</p>
     </div>
     <div class="right">
-        <h2 style="color: #2a5298;">Login</h2>
+        <h2>Login</h2>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
         <button class="btn-login" onclick="app.login()">Masuk Sekarang</button>
@@ -148,12 +190,13 @@
 
 <div class="wrapper" id="userPage" style="display:none;">
     <div class="left">
-        <h1>Dashboard</h1>
+        <h1>Berhasil! 🎉</h1>
         <p>Anda telah masuk ke dalam akun pribadi Anda.</p>
     </div>
-    <div class="right" style="text-align: center;">
-        <h2 style="color: #333;">Data Profil</h2>
-        <div class="user-card" id="userInfo"></div>
+    <div class="right">
+        <h2>Profil Pengguna</h2>
+        <div class="user-card" id="userInfo">
+            </div>
         <button class="btn-logout" onclick="app.logout()">Keluar Akun</button>
     </div>
 </div>
@@ -167,8 +210,8 @@ class LoginApp {
     initUserData() {
         if (!localStorage.getItem("users")) {
             const users = [
-                { username: "rony", password: "123", nama: "Rony Parulian" },
-                { username: "salma", password: "456", nama: "Salma Salsabil" },
+                { username: "rony", password: "123", nama: "Rony" },
+                { username: "salma", password: "456", nama: "Salma" },
                 { username: "parulian", password: "789", nama: "Parulian" }
             ];
             localStorage.setItem("users", JSON.stringify(users));
@@ -192,8 +235,8 @@ class LoginApp {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("userPage").style.display = "flex";
         document.getElementById("userInfo").innerHTML = `
-            <h3 style="margin:0; color:#333;">${user.nama}</h3>
-            <p style="margin:5px 0; color:#777;">ID: @${user.username}</p>
+            <p><strong>Nama Lengkap:</strong><br>${user.nama}</p>
+            <p style="margin-top:10px;"><strong>ID Username:</strong><br>@${user.username}</p>
         `;
     }
 
