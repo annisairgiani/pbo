@@ -2,42 +2,93 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Aplikasi Login</title>
+    <title>Login App</title>
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .container {
-            width: 300px;
-            margin: 100px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
+
+        .card {
+            background: #ffffff;
+            width: 340px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: fadeIn 0.6s ease;
         }
-        input, button {
+
+        h2 {
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        input {
             width: 100%;
-            padding: 8px;
-            margin-top: 10px;
+            padding: 10px;
+            margin-top: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
         }
-        #userPage {
-            display: none;
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 16px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
         }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .user-info {
+            text-align: center;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .logout {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container" id="loginPage">
-    <h3>Login</h3>
+<div class="card" id="loginPage">
+    <h2>🔐 Login</h2>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-    <button onclick="app.login()">Login</button>
+    <button onclick="app.login()">Masuk</button>
 </div>
 
-<div class="container" id="userPage">
-    <h3>Halaman User</h3>
-    <p id="userInfo"></p>
-    <button onclick="app.logout()">Logout</button>
+<div class="card" id="userPage" style="display:none;">
+    <h2>👋 Welcome</h2>
+    <div class="user-info" id="userInfo"></div>
+    <button class="logout" onclick="app.logout()">Logout</button>
 </div>
 
 <script>
@@ -49,38 +100,25 @@ class LoginApp {
     initUserData() {
         if (!localStorage.getItem("users")) {
             const users = [
-                {
-                    username: "rony",
-                    password: "123",
-                    nama: "Rony"
-                },
-                {
-                    username: "salma",
-                    password: "456",
-                    nama: "Salma"
-                },
-                {
-                    username: "parulian",
-                    password: "789",
-                    nama: "Parulian"
-                }
+                { username: "rony", password: "123", nama: "Rony" },
+                { username: "salma", password: "456", nama: "Salma" },
+                { username: "parulian", password: "789", nama: "Parulian" }
             ];
             localStorage.setItem("users", JSON.stringify(users));
         }
     }
 
     login() {
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
 
         const users = JSON.parse(localStorage.getItem("users"));
-
         const user = users.find(
             u => u.username === username && u.password === password
         );
 
         if (!user) {
-            alert("salah login");
+            alert("UPS! nama atau password yang anda masukan salah. Silahkan coba lagi!");
         } else {
             this.showUserPage(user);
         }
@@ -89,9 +127,11 @@ class LoginApp {
     showUserPage(user) {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("userPage").style.display = "block";
-        document.getElementById("userInfo").innerText =
-            `Selamat datang ${user.nama}
-Username: ${user.username}`;
+        document.getElementById("userInfo").innerHTML = `
+            <p><strong>Nama:</strong> ${user.nama}</p>
+            <p><strong>Username:</strong> ${user.username}</p>
+            <p>Login berhasil 🎉</p>
+        `;
     }
 
     logout() {
@@ -107,4 +147,3 @@ const app = new LoginApp();
 
 </body>
 </html>
-
