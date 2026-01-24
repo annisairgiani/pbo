@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Login System OOP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #f8fafc;
+        }
+        .neon-border {
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root" class="w-full max-w-md p-1">
+        </div>
+
+    <script>
+        // --- DATASET USER (JSON FORMAT) ---
+        const USER_DATA = [
+            { "username": "abghi", "pw": "1234" },
+            { "username": "zacky", "pw": "5678" },
+            { "username": "fahri", "pw": "9876" }
+        ];
+
+        // --- AUTH ENGINE (OOP) ---
+        class AuthManager {
+            constructor(mountId) {
+                this.mountPoint = document.getElementById(mountId);
+                this.storageKey = 'app_users';
+                this.initData();
+                this.renderLogin();
+            }
+
+            // Simpan dataset ke local storage saat pertama kali load
+            initData() {
+                localStorage.setItem(this.storageKey, JSON.stringify(USER_DATA));
+            }
+
+            // Ambil data dari local storage
+            getRegisteredUsers() {
+                return JSON.parse(localStorage.getItem(this.storageKey));
+            }
+
+            // Logika Verifikasi
+            validate(username, password) {
+                const users = this.getRegisteredUsers();
+                const match = users.find(u => u.username === username && u.pw === password);
+
+                if (match) {
+                    this.renderDashboard(match.username);
+                } else {
+                    alert("⚠️ SALAH LOGIN! Periksa kembali username atau password.");
+                }
+            }
+
+            // Template Tampilan Login
+            renderLogin() {
+                this.mountPoint.innerHTML = `
+                    <div class="bg-slate-900 p-8 rounded-3xl neon-border">
+                        <div class="text-center mb-10">
+                            <h1 class="text-4xl font-black gradient-text mb-2">AUTH.SYS</h1>
+                            <p class="text-slate-400 text-sm italic underline">Member Access Only</p>
+                        </div>
+                        
+                        <form id="authForm" class="space-y-5">
+                            <div>
+                                <input type="text" id="userInput" placeholder="Username" required
+                                    class="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl focus:outline-none focus:border-purple-500 transition-all text-white">
+                            </div>
+                            <div>
+                                <input type="password" id="passInput" placeholder="Password" required
+                                    class="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl focus:outline-none focus:border-purple-500 transition-all text-white">
+                            </div>
+                            <button type="submit" 
+                                class="w-full bg-gradient-to-r from-purple-600 to-pink-600 py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition active:scale-95 shadow-lg shadow-purple-500/20">
+                                Enter System
+                            </button>
+                        </form>
+                    </div>
+                `;
+
+                document.getElementById('authForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const u = document.getElementById('userInput').value;
+                    const p = document.getElementById('passInput').value;
+                    this.validate(u, p);
+                });
+            }
+
+            // Template Tampilan Dashboard
+            renderDashboard(name) {
+                this.mountPoint.innerHTML = `
+                    <div class="bg-slate-900 p-10 rounded-3xl neon-border text-center animate-pulse-slow">
+                        <div class="mb-6">
+                            <div class="inline-block p-4 rounded-full bg-purple-500/10 border border-purple-500/50 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-white uppercase tracking-tighter">Welcome, ${name}!</h2>
+                            <p class="text-slate-400 mt-2">Akses Sistem Berhasil Diberikan.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 my-8">
+                            <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                                <span class="block text-xs text-slate-500 uppercase">Status</span>
+                                <span class="text-green-400 font-bold">Online</span>
+                            </div>
+                            <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                                <span class="block text-xs text-slate-500 uppercase">Auth</span>
+                                <span class="text-purple-400 font-bold">User</span>
+                            </div>
+                        </div>
+
+                        <button onclick="location.reload()" 
+                            class="text-sm text-slate-500 hover:text-pink-500 transition duration-300">
+                            × TERMINATE SESSION (LOGOUT) ×
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // --- INITIALIZE APP ---
+        const app = new AuthManager('root');
+    </script>
+</body>
+</html>
