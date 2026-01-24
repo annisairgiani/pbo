@@ -3,209 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login App Color Swapped</title>
+    <title>Modern Login OOP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-        * {
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
-            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            background: #f4f7f6;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        .wrapper {
-            width: 850px;
-            height: 480px;
-            background: #fff;
-            display: flex;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* PANEL KIRI */
-        .left {
-            width: 40%;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
-
-        /* WARNA BIRU UNTUK LOGIN */
-        #loginPage .left {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        }
-
-        /* WARNA MERAH UNTUK LOGOUT / USER PAGE */
-        #userPage .left {
-            background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%);
-        }
-
-        .left h1 { margin: 0; font-size: 28px; }
-        .left p { margin-top: 15px; font-size: 14px; opacity: 0.8; line-height: 1.6; }
-
-        /* PANEL KANAN */
-        .right {
-            width: 60%;
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: white;
-        }
-
-        .right h2 { margin-bottom: 25px; color: #333; }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: 2px solid #f0f0f0;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #2a5298; /* Biru saat fokus di login */
-        }
-
-        button {
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        /* Tombol Biru (Login) */
-        #loginPage button {
-            background: #2a5298;
-            box-shadow: 0 5px 15px rgba(42, 82, 152, 0.3);
-        }
-
-        /* Tombol Merah (Logout) */
-        #userPage button {
-            background: #ef473a;
-            box-shadow: 0 5px 15px rgba(239, 71, 58, 0.3);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
-
-        .user-card {
-            background: #fff5f5;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border: 2px solid #ef473a;
-        }
-
-        @media (max-width: 768px) {
-            .wrapper { flex-direction: column; width: 95%; height: auto; }
-            .left, .right { width: 100%; }
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper" id="loginPage">
-    <div class="left">
-        <h1>Welcome Back!</h1>
-        <p>Gunakan akun Anda untuk masuk ke sistem.</p>
-    </div>
-    <div class="right">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="app.login()">Masuk ke Akun</button>
-    </div>
-</div>
+    <div id="app" class="w-full max-w-md p-8 glass-card">
+        </div>
 
-<div class="wrapper" id="userPage" style="display:none;">
-    <div class="left">
-        <h1>Akses Berhasil!</h1>
-        <p>Anda telah masuk dengan aman ke dalam dashboard.</p>
-    </div>
-    <div class="right" style="text-align: center;">
-        <h2>Data Pengguna</h2>
-        <div class="user-card" id="userInfo"></div>
-        <button onclick="app.logout()">Logout Sekarang</button>
-    </div>
-</div>
+    <script>
+        // --- DATASET AWAL (JSON) ---
+        const initialUsers = [
+            { "username": "admin", "password": "123" },
+            { "username": "user", "password": "password" }
+        ];
 
-<script>
-class LoginApp {
-    constructor() {
-        this.initUserData();
-    }
+        // --- CLASS AUTHENTICATION (OOP) ---
+        class AuthSystem {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.dbKey = 'user_database';
+                this.initDatabase();
+                this.renderLoginForm();
+            }
 
-    initUserData() {
-        if (!localStorage.getItem("users")) {
-            const users = [
-                { username: "rony", password: "123", nama: "Rony Parulian" },
-                { username: "salma", password: "456", nama: "Salma Salsabil" },
-                { username: "parulian", password: "789", nama: "Parulian" }
-            ];
-            localStorage.setItem("users", JSON.stringify(users));
+            // Inisialisasi LocalStorage jika kosong
+            initDatabase() {
+                if (!localStorage.getItem(this.dbKey)) {
+                    localStorage.setItem(this.dbKey, JSON.stringify(initialUsers));
+                    console.log("Database diinisialisasi ke LocalStorage.");
+                }
+            }
+
+            // Method untuk mengambil data user
+            getUsers() {
+                return JSON.parse(localStorage.getItem(this.dbKey));
+            }
+
+            // Logic Validasi Login
+            handleLogin(username, password) {
+                const users = this.getUsers();
+                const userFound = users.find(u => u.username === username && u.password === password);
+
+                if (userFound) {
+                    this.renderUserDashboard(userFound.username);
+                } else {
+                    alert("❌ Salah Login! Username atau password tidak cocok.");
+                }
+            }
+
+            // Render Form Login
+            renderLoginForm() {
+                this.container.innerHTML = `
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-gray-800">Selamat Datang</h2>
+                        <p class="text-gray-500">Silakan masuk ke akun Anda</p>
+                    </div>
+                    <form id="loginForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700">Username</label>
+                            <input type="text" id="userInput" required 
+                                class="w-full px-4 py-3 mt-1 border rounded-lg focus:ring-2 focus:ring-purple-400 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700">Password</label>
+                            <input type="password" id="passInput" required 
+                                class="w-full px-4 py-3 mt-1 border rounded-lg focus:ring-2 focus:ring-purple-400 outline-none transition">
+                        </div>
+                        <button type="submit" 
+                            class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition duration-300 transform hover:scale-105">
+                            Login Now
+                        </button>
+                    </form>
+                    <p class="mt-6 text-center text-xs text-gray-400">Hint: admin / 123</p>
+                `;
+
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const u = document.getElementById('userInput').value;
+                    const p = document.getElementById('passInput').value;
+                    this.handleLogin(u, p);
+                });
+            }
+
+            // Render Halaman User (Setelah Login)
+            renderUserDashboard(username) {
+                this.container.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Halo, ${username}!</h2>
+                        <p class="text-gray-600 mt-2">Ini adalah halaman dashboard user Anda.</p>
+                        <hr class="my-6">
+                        <div class="bg-gray-50 p-4 rounded-lg text-left mb-6">
+                            <p class="text-sm text-gray-500 font-mono">Status: Authenticated</p>
+                            <p class="text-sm text-gray-500 font-mono">Role: Administrator</p>
+                        </div>
+                        <button onclick="location.reload()" 
+                            class="text-purple-600 font-semibold hover:underline">
+                            ← Logout
+                        </button>
+                    </div>
+                `;
+            }
         }
-    }
 
-    login() {
-        const username = document.getElementById("username").value.trim();
-        const password = document.getElementById("password").value.trim();
-        const users = JSON.parse(localStorage.getItem("users"));
-        
-        const user = users.find(u => u.username === username && u.password === password);
-
-        if (!user) {
-            alert("UPS! nama atau password yang anda masukan salah. Silahkan coba lagi");
-        } else {
-            this.showUserPage(user);
-        }
-    }
-
-    showUserPage(user) {
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("userPage").style.display = "flex";
-        document.getElementById("userInfo").innerHTML = `
-            <h3 style="margin:0; color:#cb2d3e;">${user.nama}</h3>
-            <p style="margin:5px 0; color:#666;">Username: ${user.username}</p>
-        `;
-    }
-
-    logout() {
-        document.getElementById("userPage").style.display = "none";
-        document.getElementById("loginPage").style.display = "flex";
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-    }
-}
-
-const app = new LoginApp();
-</script>
-
+        // --- INSTANSIASI OBJECT ---
+        const myApp = new AuthSystem('app');
+    </script>
 </body>
 </html>
